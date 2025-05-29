@@ -5,11 +5,103 @@ from bidi.algorithm import get_display
 import io
 import re
 import os
+import base64
 
 app = Flask(__name__)
 
+PAGE_HTML = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Eid Gift Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #edeff2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 420px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(16, 81, 113, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #1d7db5;
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #1d7db5;
+            color: white;
+            font-weight: bold;
+            border: none;
+        }
+        button:hover {
+            background-color: #105171;
+        }
+        .preview {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .preview img {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .download-btn {
+            display: block;
+            margin: 15px auto 0;
+            padding: 10px 20px;
+            background-color: #105171;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Gift Card</h1>
+        <form method="post">
+            <label for="name">Enter Name:</label>
+            <input type="text" name="name" id="name" required>
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if image_url %}
+        <div class="preview">
+            <h2>Preview</h2>
+            <img src="{{ image_url }}" alt="Generated Gift Card">
+            <a class="download-btn" href="{{ image_url }}" download="{{ name }}.png">Download Image</a>
+            <div style="margin-top: 15px; text-align: center;">
+            <p style="margin-bottom: 5px;">Share:</p>
+            <a href="https://api.whatsapp.com/send?text=🎉%20Check%20out%20my%20Eid%20Gift%20Card!%20Create%20yours%20at%20{{ request.url_root }}" target="_blank" style="margin-right: 10px; text-decoration: none; color: #25D366;">📱 WhatsApp</a>
+            <a href="mailto:?subject=Eid%20Gift%20Card&body=🎉%20I%20made%20a%20gift%20card!%20You%20can%20make%20yours%20here:%20{{ request.url_root }}" style="text-decoration: none; color: #1d7db5;">📧 Email</a>
+</div>
+
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+'''
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-font_path = os.path.join(BASE_DIR, "IBMPlexSansArabic-Regular.ttf")
+font_path = os.path.join(BASE_DIR, "Bahij_TheSansArabic_Bold.ttf")
 arabic_bg = Image.open(os.path.join(BASE_DIR, "Arabic_adha.png"))
 english_bg = Image.open(os.path.join(BASE_DIR, "English_adha.png"))
 
@@ -53,89 +145,12 @@ def generate_card():
         img_io = io.BytesIO()
         img.save(img_io, 'PNG')
         img_io.seek(0)
-        return send_file(img_io, mimetype='image/png')
+        base64_image = base64.b64encode(img_io.read()).decode('utf-8')
+        image_data_url = f"data:image/png;base64,{base64_image}"
 
-    return render_template_string('''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Eid Al Adha Gift Card</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #105171;
-        }
-        .container {
-            background-color: rgba(253, 254, 254, 0.95);
-            max-width: 400px;
-            margin: 80px auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(29, 125, 181, 0.3);
-        }
-        h1 {
-            color: #1d7db5;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        .radio-group {
-            margin: 10px 0;
-        }
-        .radio-group label {
-            font-weight: normal;
-            margin-right: 10px;
-        }
-        button {
-            width: 100%;
-            background-color: #1d7db5;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 16px;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #105171;
-        }
-        @media (max-width: 500px) {
-            .container {
-                margin: 30px 15px;
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Create Gift Card</h1>
-        <form method="post">
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
+        return render_template_string(PAGE_HTML, image_url=image_data_url, name=name)
 
-            <button type="submit">Generate</button>
-        </form>
-    </div>
-</body>
-</html>
-''')
+    return render_template_string(PAGE_HTML, image_url=None, name=None)
 
 
 if __name__ == '__main__':
