@@ -86,9 +86,6 @@ PAGE_HTML = '''
             <h2>Preview</h2>
             <img src="{{ image_url }}" alt="Generated Gift Card">
             <a class="download-btn" href="{{ image_url }}" download="{{ name }}.png">Download Image</a>
-            <div style="margin-top: 15px; text-align: center;">
-            <p style="margin-bottom: 5px;">Share:</p>
-
         </div>
         {% endif %}
     </div>
@@ -128,9 +125,9 @@ def generate_card():
 
         if is_arabic(name):
             # name = get_display(arabic_reshaper.reshape(name).strip())
-            y_offset = 1270
+            y_offset = 1300
         else:
-            y_offset = 1410
+            y_offset = 1400
 
         _, _, text_width, text_height = draw.textbbox((0, 0), name, font=font)
         x = (img.width - text_width) // 2 + 40
