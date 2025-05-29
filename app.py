@@ -133,7 +133,7 @@ def generate_card():
         font = get_adjusted_font(name, 1510, font_path)
 
         if is_arabic(name):
-            name = get_display(arabic_reshaper.reshape(name).strip())
+            # name = get_display(arabic_reshaper.reshape(name).strip())
             y_offset = 1280
         else:
             y_offset = 1410
