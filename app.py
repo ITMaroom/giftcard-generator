@@ -14,7 +14,7 @@ PAGE_HTML = '''
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Gift Card</title>
+    <title>Create Eid Gift Card</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -51,6 +51,14 @@ PAGE_HTML = '''
         button:hover {
             background-color: #105171;
         }
+
+        form input[type="text"], form button {
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        margin-top: 10px;
+        }
+
         .preview {
             text-align: center;
             margin-top: 20px;
@@ -74,10 +82,9 @@ PAGE_HTML = '''
 </head>
 <body>
     <div class="container">
-        <h1>أنشئ بطاقة تهنئتك مع مروم</h1>
-        <h1>Create Your Gift Card With Maroom</h1>
+        <h1>Create Gift Card With Maroom</h1>
         <form method="post">
-            <label for="name">Enter Your Name Please:</label>
+            <label for="name">Enter Your Name:</label>
             <input type="text" name="name" id="name" required>
             <button type="submit">Generate</button>
         </form>
@@ -93,6 +100,7 @@ PAGE_HTML = '''
 </body>
 </html>
 '''
+
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
