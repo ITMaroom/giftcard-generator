@@ -14,7 +14,7 @@ PAGE_HTML = '''
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Your Eid Gift Card with Maroom</title>
+    <title>Create Gift Card</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -74,7 +74,8 @@ PAGE_HTML = '''
 </head>
 <body>
     <div class="container">
-        <h1>Create Gift Card</h1>
+        <h1>أنشئ بطاقة تهنئتك مع مروم</h1>
+        <h1>Create Your Gift Card With Maroom</h1>
         <form method="post">
             <label for="name">Enter Your Name Please:</label>
             <input type="text" name="name" id="name" required>
