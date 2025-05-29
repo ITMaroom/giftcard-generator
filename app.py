@@ -10,8 +10,8 @@ app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 font_path = os.path.join(BASE_DIR, "IBMPlexSansArabic-Regular.ttf")
-arabic_bg = Image.open(os.path.join(BASE_DIR, "arabic_adha.png"))
-english_bg = Image.open(os.path.join(BASE_DIR, "english_adha.png"))
+arabic_bg = Image.open(os.path.join(BASE_DIR, "Arabic_adha.png"))
+english_bg = Image.open(os.path.join(BASE_DIR, "English_adha.png"))
 
 
 def is_arabic(text):
