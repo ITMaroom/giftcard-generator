@@ -4,12 +4,15 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 import io
 import re
+import os
 
 app = Flask(__name__)
 
-font_path = "IBMPlexSansArabic-Regular.ttf"
-arabic_bg = Image.open("arabic_adha.png")
-english_bg = Image.open("english_adha.png")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+font_path = os.path.join(BASE_DIR, "IBMPlexSansArabic-Regular.ttf")
+arabic_bg = Image.open(os.path.join(BASE_DIR, "arabic_adha.png"))
+english_bg = Image.open(os.path.join(BASE_DIR, "english_adha.png"))
+
 
 def is_arabic(text):
     return bool(re.search("[\u0600-\u06FF]", text))
