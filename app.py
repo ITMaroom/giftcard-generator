@@ -112,7 +112,7 @@ english_bg = Image.open(os.path.join(BASE_DIR, "English_adha.png"))
 def is_arabic(text):
     return bool(re.search("[\u0600-\u06FF]", text))
 
-def get_adjusted_font(text, max_width, font_path, max_size=330, min_size=10):
+def get_adjusted_font(text, max_width, font_path, max_size=320, min_size=10):
     font_size = max_size
     while font_size >= min_size:
         font = ImageFont.truetype(font_path, font_size)
@@ -130,10 +130,10 @@ def generate_card():
         # img = arabic_bg.copy() if lang == "arabic" else english_bg.copy()
         img = arabic_bg.copy() if is_arabic(name) else english_bg.copy()
         draw = ImageDraw.Draw(img)
-        font = get_adjusted_font(name, 1520, font_path)
+        font = get_adjusted_font(name, 1510, font_path)
 
         if is_arabic(name):
-            # name = get_display(arabic_reshaper.reshape(name).strip())
+            name = get_display(arabic_reshaper.reshape(name).strip())
             y_offset = 1280
         else:
             y_offset = 1410
