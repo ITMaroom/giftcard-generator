@@ -88,9 +88,6 @@ PAGE_HTML = '''
             <a class="download-btn" href="{{ image_url }}" download="{{ name }}.png">Download Image</a>
             <div style="margin-top: 15px; text-align: center;">
             <p style="margin-bottom: 5px;">Share:</p>
-            <a href="https://api.whatsapp.com/send?text=🎉%20Check%20out%20my%20Eid%20Gift%20Card!%20Create%20yours%20at%20{{ request.url_root }}" target="_blank" style="margin-right: 10px; text-decoration: none; color: #25D366;">📱 WhatsApp</a>
-            <a href="mailto:?subject=Eid%20Gift%20Card&body=🎉%20I%20made%20a%20gift%20card!%20You%20can%20make%20yours%20here:%20{{ request.url_root }}" style="text-decoration: none; color: #1d7db5;">📧 Email</a>
-</div>
 
         </div>
         {% endif %}
