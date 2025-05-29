@@ -125,9 +125,9 @@ def generate_card():
 
         if is_arabic(name):
             # name = get_display(arabic_reshaper.reshape(name).strip())
-            y_offset = 1300
+            y_offset = 1290
         else:
-            y_offset = 1400
+            y_offset = 1390
 
         _, _, text_width, text_height = draw.textbbox((0, 0), name, font=font)
         x = (img.width - text_width) // 2 + 40
